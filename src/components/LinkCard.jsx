@@ -54,7 +54,7 @@ const LinkCard = ({ url = [], fetchUrls }) => {
         <Button
           variant="ghost"
           onClick={() =>
-            navigator.clipboard.writeText(`https://ratarc.in/${url?.short_url}`)
+            navigator.clipboard.writeText(`https://ratarc.vercel.app/${url?.short_url}`)
           }
         >
           <Copy />
