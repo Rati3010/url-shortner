@@ -1,51 +1,55 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import './App.css'
-import Applayout from './layouts/app.layout'
-import LandingPage from './pages/Landing'
-import Dashboard from './pages/Dashboard'
-import Auth from './pages/Auth'
-import Redirect from './pages/Redirect'
-import Link from './pages/Link'
-import UrlProvider from './Context'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './App.css';
+import Applayout from './layouts/app.layout';
+import LandingPage from './pages/Landing';
+import Dashboard from './pages/Dashboard';
+import Auth from './pages/Auth';
+import Redirect from './pages/Redirect';
+import Link from './pages/Link';
+import UrlProvider from './Context';
+import RequireAuth from './components/require.auth';
 
 const router = createBrowserRouter([
   {
-    element : <Applayout/>,
-    children:[
+    element: <Applayout />,
+    children: [
       {
-        path:'/',
-        element:<LandingPage/>
+        path: '/dashboard',
+        element: (
+          <RequireAuth>
+            <Dashboard />
+          </RequireAuth>
+        ),
       },
       {
-        path:'/dashboard',
-        element:<Dashboard/>
+        path: '/auth',
+        element: <Auth />,
       },
       {
-        path:'/auth',
-        element:<Auth/>
+        path: '/:id',
+        element: <Redirect />,
       },
       {
-        path:'/:id',
-        element:<Redirect/>
+        path: '/link/:id',
+        element: (
+          <RequireAuth>
+            <Link />
+          </RequireAuth>
+        ),
       },
       {
-        path:'/link/:id',
-        element:<Link/>
+        path: '/',
+        element: <LandingPage />,
       },
-      {
-        path:'/',
-        element:<LandingPage/>
-      },
-    ]
-  }
-])
+    ],
+  },
+]);
 function App() {
-
   return (
     <UrlProvider>
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </UrlProvider>
-  )
+  );
 }
 
-export default App
+export default App;
